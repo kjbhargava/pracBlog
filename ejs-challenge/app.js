@@ -13,10 +13,27 @@ const app = express();
 app.set('view engine', 'ejs');
 
 app.use(bodyParser.urlencoded({extended: true}));
+
 app.use(express.static("public"));
 
+//app.get creates the routes that the server will use
+//the function(req, res) is called the callback function
+app.get("/", function(req, res){
+    //when the server calls home, app.get sends the ejs template rendering home.ejs
+    //we need to target the home route or the root route.  We are setting home.ejs as the home route
 
+    res.render("home", {startingContent: homeStartingContent});
+});
 
+app.get("/about", function(req, res){
+
+    res.render("about", {contentInAbout: aboutContent});
+});
+
+app.get("/contact", function(req, res){
+
+    res.render("contact", {contentInContact: contactContent});
+});
 
 
 
