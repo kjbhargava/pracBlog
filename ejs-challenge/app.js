@@ -10,6 +10,8 @@ const contactContent = "Scelerisque eleifend donec pretium vulputate sapien. Rho
 
 const app = express();
 
+const data = [];
+
 app.set('view engine', 'ejs');
 
 app.use(bodyParser.urlencoded({extended: true}));
@@ -21,8 +23,12 @@ app.use(express.static("public"));
 app.get("/", function(req, res){
     //when the server calls home, app.get sends the ejs template rendering home.ejs
     //we need to target the home route or the root route.  We are setting home.ejs as the home route
+    res.render("home", {startingContent: homeStartingContent,
+                        blogContent: data});
+});
 
-    res.render("home", {startingContent: homeStartingContent});
+app.get("/posts/:postId/users/:userId", function(req, res){
+    console.log(req.params);
 });
 
 app.get("/about", function(req, res){
@@ -35,6 +41,23 @@ app.get("/contact", function(req, res){
     res.render("contact", {contentInContact: contactContent});
 });
 
+app.get("/compose", function(req, res){
+
+    res.render("compose");
+});
+
+app.post("/compose", function(req, res){
+        let postTitle = req.body.writingTitle;
+        let postBody = req.body.content;
+
+        const post = {
+            dataTitle: postTitle,
+            content: postBody
+        };
+
+        data.push(post);
+        res.redirect("/");
+});
 
 
 
