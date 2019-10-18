@@ -3,7 +3,11 @@
 <h1>Home</h1>
     <p><%= startingContent %></p>
 <% blogContent.forEach(function(blog) { %>
-    <h2><%= blog.dataTitle; %> </h2>
-    <p><%= blog.content; %></p>
+    <h2 name="header"><%= blog.dataTitle; %> </h2>
+
+    <p name="data">
+        <%= blog.content.substring(0, 100) + " ..." ; %>
+        <a href="/posts/<%= blog.dataTitle %>">Read More</a>
+    </p>
 <% }); %>
 <%- include("partials/footer"); -%>
